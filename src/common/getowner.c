@@ -1,9 +1,10 @@
 #include <errno.h>
 #include <pwd.h>
 #include <string.h>
-#include "file.h"
+#include <sys/stat.h>
+#include "common.h"
 
-int cm_file_get_owner(struct stat *s, char **owner) {
+int cm_get_owner(struct stat *s, char **owner) {
 	size_t bs = sizeof(*owner);
 	errno = 0;
 	struct passwd *pw = getpwuid(s->st_uid);

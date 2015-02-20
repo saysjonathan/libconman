@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <pwd.h>
 #include <unistd.h>
-#include "file.h"
+#include "common.h"
 
-int cm_file_set_owner(char *path, char *owner) {
+int cm_set_owner(char *path, char *owner) {
 	struct passwd *pw = getpwnam(owner);
 	if(pw == NULL) {
 		return CM_ERR_NOUSR;

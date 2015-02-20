@@ -11,13 +11,13 @@ int cm_file_get(char *path, cm_file *f) {
 		f->state = i;
 	}
 	if(f->state == CM_PRESENT) {
-		if((i = cm_file_get_owner(s, &f->owner)) < 0) {
+		if((i = cm_get_owner(s, &f->owner)) < 0) {
 			goto cleanup;
 		}
-		if((i = cm_file_get_group(s, &f->group)) < 0) {
+		if((i = cm_get_group(s, &f->group)) < 0) {
 			goto cleanup;
 		}
-		if((i = cm_file_get_mode(s, &f->mode)) < 0) {
+		if((i = cm_get_mode(s, &f->mode)) < 0) {
 			goto cleanup;
 		}
 	}

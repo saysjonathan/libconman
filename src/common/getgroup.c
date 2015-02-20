@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <grp.h>
 #include <string.h>
-#include "file.h"
+#include "common.h"
 
-int cm_file_get_group(struct stat *s, char **group) {
+int cm_get_group(struct stat *s, char **group) {
 	size_t bs = sizeof(*group);
 	errno = 0;
 	struct group *gr = getgrgid(s->st_gid);

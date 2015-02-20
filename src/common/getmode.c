@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include "file.h"
+#include "common.h"
 
-int cm_file_get_mode(struct stat *s, char **mode) {
+int cm_get_mode(struct stat *s, char **mode) {
 	char buf[8];
 	size_t bs = sizeof(buf);
 	errno = 0;

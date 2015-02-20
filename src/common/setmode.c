@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "file.h"
+#include "common.h"
 
-int cm_file_set_mode(char *path, char *mode) {
+int cm_set_mode(char *path, char *mode) {
 	char *e;
 	mode_t m = strtol(mode, &e, 8);
 	errno = 0;

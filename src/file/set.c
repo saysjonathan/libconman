@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "file.h"
 
 int cm_file_set(char *path, cm_file *f) {
@@ -17,14 +18,20 @@ int cm_file_set(char *path, cm_file *f) {
 		}
 	}
 	if(f->state == CM_PRESENT) {
-		if((i = cm_file_set_owner(path, f->owner)) < 0) {
-			goto cleanup;
+		if(strlen(f->owner) != 0) {
+			if((i = cm_set_owner(path, f->owner)) < 0) {
+				goto cleanup;
+			}
 		}
-		if((i = cm_file_set_group(path, f->group)) < 0) {
-			goto cleanup;
+		if(strlen(f->group) != 0) {
+			if((i = cm_set_group(path, f->group)) < 0) {
+				goto cleanup;
+			}
 		}
-		if((i = cm_file_set_mode(path, f->mode)) < 0) {
-			goto cleanup;
+		if(strlen(f->mode) != 0) {
+			if((i = cm_set_mode(path, f->mode)) < 0) {
+				goto cleanup;
+			}
 		}
 	}
 	cm_file_deinit(c);

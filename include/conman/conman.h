@@ -7,6 +7,7 @@ extern "C" {
 #include "conman/error.h"
 #include "conman/state.h"
 #include "conman/file.h"
+#include "conman/dir.h"
 
 #ifdef __cplusplus
 }

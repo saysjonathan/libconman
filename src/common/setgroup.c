@@ -1,9 +1,9 @@
 #include <errno.h>
 #include <grp.h>
 #include <unistd.h>
-#include "file.h"
+#include "common.h"
 
-int cm_file_set_group(char *path, char *group) {
+int cm_set_group(char *path, char *group) {
 	struct group *g = getgrnam(group);
 	if(g == NULL) {
 		return CM_ERR_NOGRP;
