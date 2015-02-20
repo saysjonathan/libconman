@@ -8,6 +8,7 @@ extern "C" {
 #include "conman/state.h"
 #include "conman/file.h"
 #include "conman/dir.h"
+#include "conman/link.h"
 
 #ifdef __cplusplus
 }
