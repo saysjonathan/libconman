@@ -9,6 +9,7 @@ extern "C" {
 #include "conman/file.h"
 #include "conman/dir.h"
 #include "conman/link.h"
+#include "conman/group.h"
 
 #ifdef __cplusplus
 }
