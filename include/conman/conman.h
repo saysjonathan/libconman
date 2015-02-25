@@ -10,6 +10,7 @@ extern "C" {
 #include "conman/dir.h"
 #include "conman/link.h"
 #include "conman/group.h"
+#include "conman/user.h"
 
 #ifdef __cplusplus
 }
