@@ -1,19 +1,10 @@
-PREFIX		= /usr/local
-VERSION		= 0.1.0
-VERMAJ		= 0
-INCS		= -I. -I/usr/include -I./include
-CFLAGS		= -g -std=c99 -pedantic -Wall ${INCS} -D_DEFAULT_SOURCE
-CFLAGS_SH 	= ${CFLAGS} -fPIC -DSHARED
-CFLAGS_ST	= ${CFLAGS}
-SRCS		= $(wildcard src/**/*.c)
-OBJS		= ${SRCS:.c=.o}
-LOBJS		= ${SRCS:.c=.lo}
-SHLIB		= lib/libconman.so
-STLIB		= lib/libconman.a
-VERLIB		= lib/libconman.so.${VERSION}
-INC		= $(wildcard include/conman/*.h)
+PREFIX 	= /usr/local
+SRCS	= $(wildcard src/**/*.c)
+LOBJS	= ${SRCS:.c=.lo}
+SHLIB	= lib/libconman.so
+INC	= $(wildcard include/conman/*.h)
 
-all: pre ${VERLIB} ${STLIB}
+all: pre ${SHLIB}
 
 pre:
 	@echo creating build directories
@@ -21,34 +12,23 @@ pre:
 
 clean:
 	@echo cleaning
-	@rm -f ${OBJS}
 	@rm -f ${LOBJS}
 	@rm -rf lib
 
-%.o: %.c
-	cc ${CFLAGS_ST} -c -o $@ $<
-
 %.lo: %.c
-	cc ${CFLAGS_SH} -c -o $@ $<
+	cc -g -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -c -o $@ $<
 
-${STLIB}: ${OBJS}
-	@ar rc $@ ${OBJS}
-	@ranlib $@
+${SHLIB}: ${LOBJS}
+	cc -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -shared -o $@ ${LOBJS}
 
-${VERLIB}: ${LOBJS}
-	cc ${CFLAGS_SH} -shared -Wl,-soname,${SHLIB}.${VERMAJOR} -o $@ ${LOBJS}
-
-install: all
+install:
 	@install -d ${PREFIX}/include/conman
 	@install -D -m 644 ${INC} ${PREFIX}/include/conman
 	@install -d ${PREFIX}/lib
-	@install -D -m 755 ${VERLIB} ${PREFIX}/lib
-	@ln -sf ${PREFIX}/${VERLIB} ${PREFIX}/${SHLIB}
+	@install -D -m 755 ${SHLIB} ${PREFIX}/lib
 
 uninstall:
-	@rm -f ${PREFIX}/${STLIB}
 	@rm -f ${PREFIX}/${SHLIB}
-	@rm -f ${PREFIX}/${VERLIB}
 	@rm -rf ${PREFIX}/include/conman
 
 .PHONY: all pre clean install uninstall
