@@ -16,10 +16,10 @@ clean:
 	@rm -rf lib
 
 %.lo: %.c
-	cc -g -std=c11 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -c -o $@ $<
+	cc -g -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -c -o $@ $<
 
 ${SHLIB}: ${LOBJS}
-	cc -std=c11 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -shared -o $@ ${LOBJS}
+	cc -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -shared -o $@ ${LOBJS}
 
 install:
 	@install -d ${PREFIX}/include/conman

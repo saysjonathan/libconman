@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <unistd.h>
 #include "link.h"
 
 int cm_link_get_state(char *path, struct stat *s) {

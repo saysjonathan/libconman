@@ -4,6 +4,10 @@
 extern "C" {
 #endif
 
+#ifndef LOGIN_NAME_MAX
+#define LOGIN_NAME_MAX 256
+#endif
+
 #include <stdlib.h>
 #include <sys/stat.h>
 #include "conman/error.h"
