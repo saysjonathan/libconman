@@ -13,7 +13,7 @@ int cm_dir_set(char *path, cm_dir *d) {
 		goto cleanup;
 	}
 	if(d->state != c->state) {
-		if((i = cm_dir_set_state(path, d->state)) < 0) {
+		if((i = cm_dir_set_state(path, d->state, d->recurse)) < 0) {
 			goto cleanup;
 		}
 	}
@@ -34,9 +34,7 @@ int cm_dir_set(char *path, cm_dir *d) {
 			}
 		}
 	}
-	cm_dir_deinit(c);
-	free(c);
-	return 0;
+	goto cleanup;
 cleanup:
 	cm_dir_deinit(c);
 	free(c);

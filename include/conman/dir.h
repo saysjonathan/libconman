@@ -10,6 +10,7 @@ struct cm_dir {
 	char *owner;
 	char *group;
 	char *mode;
+	int recurse;
 };
 
 int cm_dir_init(cm_dir *d);
