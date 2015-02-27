@@ -1,14 +1,18 @@
-PREFIX 	= /usr/local
-INCS	= -I. -I/usr/include -I./include
-CFLAGS 	= -std=c99 -pedantic -Wall -O0 -fPIC -DSHARED -D_DEFAULT_SOURCE -D_BSD_SOURCE
-SRCS	= $(wildcard src/**/*.c)
-LOBJS	= ${SRCS:.c=.lo}
-SHLIB	= lib/libconman.so
-INC	= $(wildcard include/conman/*.h)
+include mk/os.mk
+PREFIX 	 = /usr/local
+INCS	 = -I. -I/usr/include -I./include
+CFLAGS 	 = -std=c99 -pedantic -Wall -O0 -fPIC -DSHARED -D_DEFAULT_SOURCE -D_BSD_SOURCE
+ALLSRCS	 = $(wildcard src/**/*.c)
+PKGSRCS  = $(wildcard src/**/${PKGMGR}/*.c)
+SRCS	 = ${ALLSRCS} ${PKGSRCS}
+LOBJS	 = ${SRCS:.c=.lo}
+SHLIB	 = lib/libconman.so
+INC	 = $(wildcard include/conman/*.h)
 
 all: pre ${SHLIB}
 
 pre:
+	@echo "${DIST}"
 	@echo creating build directories
 	@mkdir -p lib
 
