@@ -1,4 +1,6 @@
 PREFIX 	= /usr/local
+INCS	= -I. -I/usr/include -I./include
+CFLAGS 	= -std=c99 -pedantic -Wall -O0 -fPIC -DSHARED -D_DEFAULT_SOURCE -D_BSD_SOURCE
 SRCS	= $(wildcard src/**/*.c)
 LOBJS	= ${SRCS:.c=.lo}
 SHLIB	= lib/libconman.so
@@ -16,10 +18,10 @@ clean:
 	@rm -rf lib
 
 %.lo: %.c
-	cc -g -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -c -o $@ $<
+	cc ${CFLAGS} ${INCS} -c -o $@ $<
 
 ${SHLIB}: ${LOBJS}
-	cc -std=c99 -pedantic -Wall -O0 -I. -I/usr/include -I./include -fPIC -DSHARED -D_DEFAULT_SOURCE -shared -o $@ ${LOBJS}
+	cc ${CFLAGS} ${INCS} -shared -o $@ ${LOBJS}
 
 install:
 	@install -d ${PREFIX}/include/conman
