@@ -5,7 +5,7 @@
 #include "common.h"
 
 int cm_get_owner(struct stat *s, char **owner) {
-	size_t bs = sizeof(*owner);
+	size_t bs = OWNER_NAME_MAX;
 	errno = 0;
 	struct passwd *pw = getpwuid(s->st_uid);
 	if(pw == NULL) {

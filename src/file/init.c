@@ -6,11 +6,11 @@
 
 int cm_file_init(cm_file *f) {
 	errno = 0;
-	if((f->owner = malloc(LOGIN_NAME_MAX)) == NULL) {
+	if((f->owner = malloc(OWNER_NAME_MAX)) == NULL) {
 		return -errno;
 	}
 	f->owner[0] = '\0';
-	if((f->group = malloc(LOGIN_NAME_MAX)) == NULL) {
+	if((f->group = malloc(GROUP_NAME_MAX)) == NULL) {
 		return -errno;
 	}
 	f->group[0] = '\0';

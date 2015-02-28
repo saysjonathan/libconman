@@ -12,7 +12,6 @@ INC	 = $(wildcard include/conman/*.h)
 all: pre ${SHLIB}
 
 pre:
-	@echo "${DIST}"
 	@echo creating build directories
 	@mkdir -p lib
 

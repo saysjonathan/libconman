@@ -7,6 +7,8 @@ extern "C" {
 #ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 256
 #endif
+#define OWNER_NAME_MAX LOGIN_NAME_MAX 
+#define GROUP_NAME_MAX LOGIN_NAME_MAX 
 
 #include <stdlib.h>
 #include <sys/stat.h>

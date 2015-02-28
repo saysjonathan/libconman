@@ -4,7 +4,7 @@
 #include "common.h"
 
 int cm_get_group(struct stat *s, char **group) {
-	size_t bs = sizeof(*group);
+	size_t bs = GROUP_NAME_MAX;
 	errno = 0;
 	struct group *gr = getgrgid(s->st_gid);
 	if(gr == NULL) {
