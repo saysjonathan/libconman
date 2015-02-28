@@ -9,9 +9,11 @@ libconman is a library for managing configuration state. It creates a simple int
 	git clone git@github.com:virginops/libconman.git
 
 To build:
+
 	make
 
 To install:
+
 	make install
 
 ## License
