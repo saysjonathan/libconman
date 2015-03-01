@@ -28,6 +28,8 @@ int cm_replace_entry(char *name, char *pattern, char *line, char *file, char *tm
 int cm_find_next_id(char *file, char *pattern);
 int cm_join_members(char **mem, char *buf);
 
+int cm_run_cmd(char *path, char * const args[], int (*fn)(const char *));
+
 #ifdef __cplusplus
 }
 #endif

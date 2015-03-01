@@ -7,6 +7,7 @@ extern "C" {
 #include "conman/error.h"
 #include "conman/pkg.h"
 #include "conman/state.h"
+#include "../common/common.h"
 
 #define MAX_PKGVER_LEN	64
 

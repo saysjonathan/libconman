@@ -1,7 +1,7 @@
 include mk/os.mk
 PREFIX 	 = /usr/local
 INCS	 = -I. -I/usr/include -I./include
-CFLAGS 	 = -std=c99 -pedantic -Wall -O0 -fPIC -DSHARED -D_DEFAULT_SOURCE -D_BSD_SOURCE
+CFLAGS 	 = -std=c99 -pedantic -Wall -O0 -fPIC -DSHARED -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_SOURCE
 ALLSRCS	 = $(wildcard src/**/*.c)
 PKGSRCS  = $(wildcard src/**/${PKGMGR}/*.c)
 SRCS	 = ${ALLSRCS} ${PKGSRCS}

@@ -4,23 +4,33 @@
 #include <sys/stat.h>
 #include "yum.h"
 
-int cm_pkg_get_state(char *pkg, cm_pkg *p) {
-	char buf[MAX_RPMQA_LEN], pm[256], vm[256];
-	size_t bs = sizeof(buf);
-	int s = CM_ABSENT;
-	FILE *f;
+static int state;
+static char *package;
+static char * const args[] = {
+	RPM_PATH,
+	"-qa",
+	"--qf",
+	"%{NAME} %{VERSION} %{RELEASE} %{ARCH}\\n",
+	NULL,
+};
 
-	errno = 0;
-	if((f = popen(QUERY_COMMAND, "r")) == NULL) {
-		return -errno;
-	}
-	while(fgets(buf, bs, f) != NULL) {
-		if(sscanf(buf, "%s %*s %s %*s %*s %*s", pm, vm) != EOF) {
-			if(strcmp(pkg, pm) == 0) {
-				s = CM_PRESENT;
-			}
+static int parse_query(const char *string) {
+	char p[256];
+	if(sscanf(string, "%s %*s %*s %*s %*s", p) != EOF) {
+		if(strcmp(package, p) == 0) {
+			state = CM_PRESENT;
+			return state;
 		}
 	}
-	fclose(f);
-	return s;
+	return 0;
+}
+
+int cm_pkg_get_state(char *pkg, cm_pkg *p) {
+	int s;
+	package = pkg;
+	state = CM_ABSENT;
+	if((s = cm_run_cmd(RPM_PATH, args, parse_query)) != 0) {
+		return s;
+	}
+	return state;
 }

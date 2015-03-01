@@ -4,69 +4,38 @@
 #include <string.h>
 #include "yum.h"
 
-static int runcmd(char *cmd) {
-	char buf[2048];
-	size_t bs = sizeof(buf);
-	FILE *f;
-
-	errno = 0;
-	if((f = popen(cmd, "r")) == NULL) {
-		return -errno;
-	}
-	while(fgets(buf, bs, f) != NULL) {
-		printf("%s", buf);
-	}
-	return fclose(f);
-}
-
-static int createcmd(char *cmd, char *pkg, char **buf) {
-	char s[256];
-	strcpy(s, cmd);
-	strcat(s, " ");
-	strcat(s, pkg);
-	strncpy(*buf, s, strlen(s));
+static int parse(const char *s) {
 	return 0;
 }
 
 static int install(char *pkg) {
-	char *buf;
-	buf = malloc(256);
-	buf[0] = '\0';
-	int i = 0;
-
-	if((i = createcmd(INSTALL_COMMAND, pkg, &buf)) != 0) {
-		goto cleanup;
+	int i;
+	char * const args[] = {
+		RPM_PATH,
+		"install",
+		"-d 0",
+		"-e 0",
+		"-y",
+		pkg,
+		NULL,
+	};
+	if((i = cm_run_cmd(YUM_PATH, args, parse)) != 0) {
+		return CM_ERR_NOPKG;
 	}
-	if((i = runcmd(buf)) != 0) {
-		switch(i) {
-			case 256:
-				i = CM_ERR_NOPKG;
-				break;
-		}
-		goto cleanup;
-	}
-	goto cleanup;
-cleanup:
-	free(buf);
-	return i;
+	return 0;
 }
 
 static int uninstall(char *pkg) {
-	char *buf;
-	buf = malloc(256);
-	buf[0] = '\0';
-	int i = 0;
-
-	if((i = createcmd(REMOVE_COMMAND, pkg, &buf)) != 0) {
-		goto cleanup;
-	}
-	if((i = runcmd(buf)) != 0) {
-		goto cleanup;
-	}
-	goto cleanup;
-cleanup:
-	free(buf);
-	return i;
+	char * const args[] = {
+		RPM_PATH,
+		"remove",
+		"-d 0",
+		"-e 0",
+		"-y",
+		pkg,
+		NULL,
+	};
+	return cm_run_cmd(YUM_PATH, args, parse);
 }
 
 int cm_pkg_set_state(char *path, int state) {
