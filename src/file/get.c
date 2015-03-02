@@ -20,6 +20,9 @@ int cm_file_get(char *path, cm_file *f) {
 		if((i = cm_get_mode(s, &f->mode)) < 0) {
 			goto cleanup;
 		}
+		if((i = cm_file_get_hash(path, &f->hash)) < 0) {
+			goto cleanup;
+		}
 	}
 	free(s);
 	return 0;

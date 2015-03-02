@@ -10,6 +10,8 @@ struct cm_file {
 	char *owner;
 	char *group;
 	char *mode;
+	char *source;
+	char *hash;
 };
 
 int cm_file_init(cm_file *f);

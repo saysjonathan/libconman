@@ -11,7 +11,8 @@ extern "C" {
 #include "../common/common.h"
 
 int cm_file_get_state(char *path, struct stat *s);
-int cm_file_set_state(char *path, int state);
+int cm_file_get_hash(char *path, char **hash);
+int cm_file_set_state(char *path, char *source, int state);
 
 #ifdef __cplusplus
 }

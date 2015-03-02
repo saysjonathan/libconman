@@ -18,5 +18,13 @@ int cm_file_init(cm_file *f) {
 		return -errno;
 	}
 	f->mode[0] = '\0';
+	if((f->source = malloc(256)) == NULL) {
+		return -errno;
+	}
+	f->source[0] = '\0';
+	if((f->hash = malloc(40)) == NULL) {
+		return -errno;
+	}
+	f->hash[0] = '\0';
 	return 0;
 }

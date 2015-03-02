@@ -11,9 +11,22 @@ extern "C" {
 #define GROUP_NAME_MAX LOGIN_NAME_MAX 
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <sys/stat.h>
 #include "conman/error.h"
 #include "conman/state.h"
+
+struct sha1 {
+	uint64_t len;
+	uint32_t h[5];
+	uint8_t buf[64];
+};
+
+enum { SHA1_DIGEST_LENGTH = 20 };
+
+void sha1_init(void *ctx);
+void sha1_update(void *ctx, const void *m, unsigned long len);
+void sha1_sum(void *ctx, uint8_t md[SHA1_DIGEST_LENGTH]);
 
 int cm_get_owner(struct stat *s, char **owner);
 int cm_get_group(struct stat *s, char **group);

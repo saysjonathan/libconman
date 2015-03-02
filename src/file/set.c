@@ -2,22 +2,51 @@
 #include <string.h>
 #include "file.h"
 
+static void teardown(cm_file *f) {
+	if(f) {
+		cm_file_deinit(f);
+		free(f);
+	}
+}
+
+static int setup(char *path, cm_file *f) {
+	int i;
+	if((i = cm_file_init(f)) < 0) {
+		free(f);
+		return i;
+	}
+	if((i = cm_file_get(path, f)) < 0) {
+		teardown(f);
+		return i;
+	}
+	return 0;
+}
+
 int cm_file_set(char *path, cm_file *f) {
 	int i;
 	cm_file *c = malloc(sizeof(cm_file));
-	if((i = cm_file_init(c)) < 0) {
-		free(c);
+	cm_file *s = NULL;
+	if((i = setup(path, c)) != 0) {
 		return i;
 	}
-	if((i = cm_file_get(path, c)) < 0) {
-		goto cleanup;
-	}
+
 	if(f->state != c->state) {
-		if((i = cm_file_set_state(path, f->state)) < 0) {
+		if((i = cm_file_set_state(path, f->source, f->state)) < 0) {
 			goto cleanup;
 		}
 	}
 	if(f->state == CM_PRESENT) {
+		if(strlen(f->source) != 0) {
+			s = malloc(sizeof(cm_file));
+			if((i = setup(f->source, s)) != 0) {
+				return i;
+			}
+			if(strcmp(f->hash, s-hash) != 0) {
+				if((i = cm_file_set_state(path, f->source, f->state)) < 0) {
+					goto cleanup;
+				}
+			}
+		}
 		if(strlen(f->owner) != 0) {
 			if((i = cm_set_owner(path, f->owner)) < 0) {
 				goto cleanup;
@@ -34,11 +63,9 @@ int cm_file_set(char *path, cm_file *f) {
 			}
 		}
 	}
-	cm_file_deinit(c);
-	free(c);
-	return 0;
+	goto cleanup;
 cleanup:
-	cm_file_deinit(c);
-	free(c);
+	teardown(c);
+	teardown(s);
 	return i;
 }
