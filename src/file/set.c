@@ -41,7 +41,7 @@ int cm_file_set(char *path, cm_file *f) {
 			if((i = setup(f->source, s)) != 0) {
 				return i;
 			}
-			if(strcmp(f->hash, s-hash) != 0) {
+			if(strcmp(f->hash, s->hash) != 0) {
 				if((i = cm_file_set_state(path, f->source, f->state)) < 0) {
 					goto cleanup;
 				}
