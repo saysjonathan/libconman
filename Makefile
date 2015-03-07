@@ -7,13 +7,15 @@ PKGSRCS  = $(wildcard src/**/${PKGMGR}/*.c)
 SRCS	 = ${ALLSRCS} ${PKGSRCS}
 LOBJS	 = ${SRCS:.c=.lo}
 SHLIB	 = lib/libconman.so
-INC	 = $(wildcard include/conman/*.h)
+INC	 = $(wildcard include/*.h)
+INCO	 = $(wildcard include/**/*.h)
 
 all: pre ${SHLIB}
 
 pre:
 	@echo creating build directories
 	@mkdir -p lib
+	@echo ${INC}
 
 clean:
 	@echo cleaning
@@ -28,12 +30,14 @@ ${SHLIB}: ${LOBJS}
 
 install:
 	@install -d ${PREFIX}/include/conman
-	@install -D -m 644 ${INC} ${PREFIX}/include/conman
+	@install -D -m 644 ${INC} ${PREFIX}/include
+	@install -D -m 644 ${INCO} ${PREFIX}/include/conman
 	@install -d ${PREFIX}/lib
 	@install -D -m 755 ${SHLIB} ${PREFIX}/lib
 
 uninstall:
 	@rm -f ${PREFIX}/${SHLIB}
 	@rm -rf ${PREFIX}/include/conman
+	@rm -rf ${PREFIX}/${INC}
 
 .PHONY: all pre clean install uninstall
