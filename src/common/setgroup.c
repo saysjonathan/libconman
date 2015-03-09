@@ -3,7 +3,10 @@
 #include <unistd.h>
 #include "common.h"
 
-int cm_set_group(char *path, char *group) {
+int cm_set_group(char *path, char *group, int recurse) {
+	if(recurse) {
+		cm_recurse(path, group, cm_set_group);
+	}
 	struct group *g = getgrnam(group);
 	if(g == NULL) {
 		return CM_ERR_NOGRP;

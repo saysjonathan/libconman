@@ -3,7 +3,10 @@
 #include <unistd.h>
 #include "common.h"
 
-int cm_set_owner(char *path, char *owner) {
+int cm_set_owner(char *path, char *owner, int recurse) {
+	if(recurse) {
+		cm_recurse(path, owner, cm_set_owner);
+	}
 	struct passwd *pw = getpwnam(owner);
 	if(pw == NULL) {
 		return CM_ERR_NOUSR;

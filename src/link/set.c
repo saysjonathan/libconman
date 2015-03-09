@@ -24,12 +24,12 @@ int cm_link_set(char *path, cm_link *l) {
 			}
 		}
 		if(strlen(l->owner) != 0) {
-			if((i = cm_set_owner(path, l->owner)) < 0) {
+			if((i = cm_set_owner(path, l->owner, 0)) < 0) {
 				goto cleanup;
 			}
 		}
 		if(strlen(l->group) != 0) {
-			if((i = cm_set_group(path, l->group)) < 0) {
+			if((i = cm_set_group(path, l->group, 0)) < 0) {
 				goto cleanup;
 			}
 		}

@@ -48,17 +48,17 @@ int cm_file_set(char *path, cm_file *f) {
 			}
 		}
 		if(strlen(f->owner) != 0) {
-			if((i = cm_set_owner(path, f->owner)) < 0) {
+			if((i = cm_set_owner(path, f->owner, 0)) < 0) {
 				goto cleanup;
 			}
 		}
 		if(strlen(f->group) != 0) {
-			if((i = cm_set_group(path, f->group)) < 0) {
+			if((i = cm_set_group(path, f->group, 0)) < 0) {
 				goto cleanup;
 			}
 		}
 		if(strlen(f->mode) != 0) {
-			if((i = cm_set_mode(path, f->mode)) < 0) {
+			if((i = cm_set_mode(path, f->mode, 0)) < 0) {
 				goto cleanup;
 			}
 		}

@@ -28,12 +28,15 @@ void sha1_init(void *ctx);
 void sha1_update(void *ctx, const void *m, unsigned long len);
 void sha1_sum(void *ctx, uint8_t md[SHA1_DIGEST_LENGTH]);
 
+int cm_recurse(char *path, char *arg, int (*fn)(char *, char *, int));
+int cm_rm(char *path, char *unused, int recurse);
+
 int cm_get_owner(struct stat *s, char **owner);
 int cm_get_group(struct stat *s, char **group);
 int cm_get_mode(struct stat *s, char **mode);
-int cm_set_owner(char *path, char *owner);
-int cm_set_group(char *path, char *group);
-int cm_set_mode(char *path, char *mode);
+int cm_set_owner(char *path, char *owner, int recurse);
+int cm_set_group(char *path, char *group, int recurse);
+int cm_set_mode(char *path, char *mode, int recurse);
 
 int cm_append_entry(char *line, size_t size, char *file);
 int cm_delete_entry(char *name, char *pattern, char *file, char *tmpfile);

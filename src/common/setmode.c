@@ -4,7 +4,10 @@
 #include <sys/types.h>
 #include "common.h"
 
-int cm_set_mode(char *path, char *mode) {
+int cm_set_mode(char *path, char *mode, int recurse) {
+	if(recurse) {
+		cm_recurse(path, mode, cm_set_mode);
+	}
 	char *e;
 	mode_t m = strtol(mode, &e, 8);
 	errno = 0;
