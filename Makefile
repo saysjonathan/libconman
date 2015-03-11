@@ -28,7 +28,7 @@ clean:
 ${SHLIB}: ${LOBJS}
 	cc ${CFLAGS} ${INCS} -shared -o $@ ${LOBJS}
 
-install:
+install: all
 	@install -d ${PREFIX}/include/conman
 	@install -D -m 644 ${INC} ${PREFIX}/include
 	@install -D -m 644 ${INCO} ${PREFIX}/include/conman
