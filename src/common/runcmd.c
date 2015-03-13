@@ -30,9 +30,11 @@ int cm_run_cmd(char *path, char * const args[], int (*fn)(const char *)) {
 		return -errno;
 	}
 	waitpid(p, &s, 0);
-	while(fgets(buf, bs, f) != NULL) {
-		if(fn(buf) != 0) {
-			break;
+	if(fn != NULL) {
+		while(fgets(buf, bs, f) != NULL) {
+			if(fn(buf) != 0) {
+				break;
+			}
 		}
 	}
 	close(pfd[0]);

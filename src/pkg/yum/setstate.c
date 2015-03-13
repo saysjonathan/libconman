@@ -39,10 +39,13 @@ static int uninstall(char *pkg) {
 }
 
 int cm_pkg_set_state(char *path, int state) {
-	if(state == CM_PRESENT) {
-		return install(path);
-	} else if(state == CM_ABSENT) {
-		return uninstall(path);
+	switch(state) {
+		case CM_PRESENT:
+		case CM_LATEST:
+			return install(path);
+			break;
+		case CM_ABSENT:
+			return uninstall(path);
 	}
 	return -1;
 }

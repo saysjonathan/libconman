@@ -11,7 +11,7 @@ int cm_pkg_set(char *pkg, cm_pkg *p) {
 	if((i = cm_pkg_get(pkg, c)) < 0) {
 		goto cleanup;
 	}
-	if(p->state != c->state) {
+	if((p->state != c->state) || p->state == CM_LATEST) {
 		if((i = cm_pkg_set_state(pkg, p->state)) < 0) {
 			goto cleanup;
 		}

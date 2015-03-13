@@ -7,6 +7,8 @@ extern "C" {
 enum cm_state {
 	CM_ABSENT,
 	CM_PRESENT,
+	CM_OUTDATED,
+	CM_LATEST
 };
 
 #ifdef __cplusplus
