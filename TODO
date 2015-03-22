@@ -1,0 +1,12 @@
+# Pkg
+* update package
+* install specific package version
+* apt support
+
+# Service
+* Completely absent
+* Support for SysV init
+* Support for systemd
+
+# User
+* manage supplementary groups
