@@ -12,6 +12,7 @@ extern "C" {
 #include "conman/group.h"
 #include "conman/user.h"
 #include "conman/pkg.h"
+#include "conman/util.h"
 
 #ifdef __cplusplus
 }

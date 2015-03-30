@@ -14,6 +14,12 @@ static char * const args[] = {
 	NULL,
 };
 
+static char * const outdated_args[] = {
+	YUM_PATH,
+	"check-update",
+	NULL
+};
+
 static int parse_query(const char *string) {
 	char p[256];
 	if(sscanf(string, "%s %*s %*s %*s %*s", p) != EOF) {
@@ -26,11 +32,15 @@ static int parse_query(const char *string) {
 }
 
 int cm_pkg_get_state(char *pkg, cm_pkg *p) {
-	int s;
 	package = pkg;
 	state = CM_ABSENT;
-	if((s = cm_run_cmd(RPM_PATH, args, parse_query)) != 0) {
-		return s;
+	cm_run_cmd(RPM_PATH, args, parse_query);
+	if(state == CM_PRESENT) {
+		if(cm_run_cmd(YUM_PATH, outdated_args, NULL) != 0) {
+			state = CM_OUTDATED;
+		} else {
+			state = CM_LATEST;
+		}
 	}
 	return state;
 }
