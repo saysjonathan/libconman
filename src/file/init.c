@@ -22,7 +22,7 @@ int cm_file_init(cm_file *f) {
 		return -errno;
 	}
 	f->source[0] = '\0';
-	if((f->hash = malloc(40)) == NULL) {
+	if((f->hash = malloc(42)) == NULL) {
 		return -errno;
 	}
 	f->hash[0] = '\0';
