@@ -17,6 +17,12 @@ int diff_present(int state) {
 		case CM_PRESENT:
 			i = 0;
 			break;
+		case CM_LATEST:
+			i = 0;
+			break;
+		case CM_OUTDATED:
+			i = 0;
+			break;
 	}
 	return i;
 }
